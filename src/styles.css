@@ -1,0 +1,178 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * - Keep every @import in this top block, above @theme and the rest of the file. Install an
+ *   npm package before @importing its CSS. Never @import a remote URL (web fonts, CDN CSS): the
+ *   build resolves @import from the filesystem. Load those with a <link> in the head() of
+ *   src/routes/__root.tsx and name the family in a --font-* token in @theme inline below.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The design lives in this file: oklch color tokens on the shadcn variables
+ * (--background, --foreground, --primary, --secondary, --muted, --accent, ...) plus
+ * new tokens as needed, font tokens, and custom styles and animations.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
+  --color-antique-cream: var(--antique-cream);
+  --color-champagne: var(--champagne);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-ink: var(--ink);
+  --font-script: "Great Vibes", cursive;
+  --font-display: "Cinzel", serif;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-playfair: "Playfair Display", serif;
+  --font-arabic: "Amiri", serif;
+}
+
+:root {
+  --radius: 0.25rem;
+  --ivory: oklch(0.968 0.014 88);
+  --cream: oklch(0.942 0.021 84);
+  --antique-cream: oklch(0.905 0.03 82);
+  --champagne: oklch(0.8 0.075 82);
+  --gold: oklch(0.725 0.085 78);
+  --gold-deep: oklch(0.62 0.08 75);
+  --ink: oklch(0.36 0.03 70);
+  --background: var(--ivory);
+  --foreground: var(--ink);
+  --card: oklch(0.975 0.012 88);
+  --card-foreground: var(--ink);
+  --popover: var(--ivory);
+  --popover-foreground: var(--ink);
+  --primary: var(--gold-deep);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--cream);
+  --secondary-foreground: var(--ink);
+  --muted: var(--antique-cream);
+  --muted-foreground: oklch(0.5 0.035 72);
+  --accent: var(--champagne);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--ivory);
+  --border: color-mix(in oklab, var(--champagne) 70%, transparent);
+  --input: var(--champagne);
+  --ring: var(--gold);
+  --chart-1: var(--gold); --chart-2: var(--champagne); --chart-3: var(--gold-deep); --chart-4: var(--cream); --chart-5: var(--ink);
+  --sidebar: var(--ivory); --sidebar-foreground: var(--ink); --sidebar-primary: var(--gold-deep); --sidebar-primary-foreground: var(--ivory);
+  --sidebar-accent: var(--cream); --sidebar-accent-foreground: var(--ink); --sidebar-border: var(--champagne); --sidebar-ring: var(--gold);
+  --gradient-gold: linear-gradient(135deg, var(--gold-deep), var(--champagne) 45%, var(--gold) 70%, var(--gold-deep));
+  --shadow-soft: 0 20px 50px -25px color-mix(in oklab, var(--gold-deep) 45%, transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+  }
+  body {
+    font-family: var(--font-serif);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+}
+
+@utility text-gold-gradient {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+@utility bg-gold-gradient { background: var(--gradient-gold); }
+@utility shadow-soft { box-shadow: var(--shadow-soft); }
+@utility section-ivory { background-color: var(--ivory); }
+@utility section-cream {
+  background-color: var(--cream);
+  background-image: radial-gradient(color-mix(in oklab, var(--champagne) 22%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+@utility frame-ornate {
+  position: relative;
+  border: 1px solid var(--champagne);
+  outline: 1px solid color-mix(in oklab, var(--champagne) 55%, transparent);
+  outline-offset: -8px;
+}
+@utility arch-top { border-radius: 999px 999px 0.5rem 0.5rem; }
+
+@keyframes float-y { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+@keyframes sparkle { 0% { opacity: 0; transform: translateY(0) scale(.6) } 30% { opacity: 1 } 100% { opacity: 0; transform: translateY(-80px) scale(1) } }
+@keyframes tap-pulse { 0%,100% { transform: scale(1); opacity: .9 } 50% { transform: scale(1.15); opacity: .4 } }
+@utility animate-float { animation: float-y 6s ease-in-out infinite; }
+@utility animate-sparkle { animation: sparkle 5s ease-in infinite; }
+@utility animate-tap { animation: tap-pulse 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
